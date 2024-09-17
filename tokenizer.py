@@ -25,7 +25,7 @@ def main():
 
     # Load the tokenizer & model
     tokenizer = MarianTokenizer.from_pretrained('Helsinki-NLP/opus-mt-ko-en')
-    model = MarianMTModel.from_pretrained('Helsinki-NLP/opus-mt-ko-en') # MT: Machine Translation
+    model = MarianMTModel.from_pretrained('Helsinki-NLP/opus-mt-ko-en').to(DEVICE) # MT: Machine Translation
 
     eos_idx = tokenizer.eos_token_id
     pad_idx = tokenizer.pad_token_id
@@ -70,6 +70,12 @@ def main():
     d_ff = 512
     n_heads = 8
     drop_p = 0.1
-
+    
+    input_text = "예쁜 내 딸이 태어났다."
+    input_tokens = tokenizer.encode(input_text, return_tensors = 'pt').to(DEVICE)
+    output = model.generate(input_tokens, max_length = max_len)
+    translated_text = tokenizer.decode(output[0], skip_special_tokens = True)
+    print(translated_text)
+    
 if __name__ == "__main__":
     main()
