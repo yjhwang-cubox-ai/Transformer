@@ -23,6 +23,8 @@ class Transformer(nn.Module):
     def make_enc_mask(self, src): # src.shape: 개단
         enc_mask = (src == self.pad_idx).unsqueeze(1).unsqueeze(2) #개11단
         enc_mask = enc_mask.expand(src.shape[0], self.n_heads, src.shape[1], src.shape[1]) # 개헤단단
+        
+        return enc_mask
                 
     def make_dec_mask(self, trg):
         trg_pad_mask = (trg == self.pad_idx).unsqueeze(1).unsqueeze(2)
@@ -47,6 +49,6 @@ class Transformer(nn.Module):
         enc_dec_mask = self.make_enc_dec_mask(src, trg)
         
         enc_out, atten_encs = self.encoder(src, enc_mask)
-        out, atten_decs, atten_enc_decs = self.decoder(trg, dec_mask, enc_out, enc_dec_mask)
+        out, atten_decs, atten_enc_decs = self.decoder(trg, enc_out, dec_mask, enc_dec_mask)
         
         return out, atten_encs, atten_decs, atten_enc_decs

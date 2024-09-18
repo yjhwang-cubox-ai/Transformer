@@ -28,7 +28,7 @@ class MHA(nn.Module):
         if mask is not None:
             attention_score[mask] = -1e10
         
-        attention_weights = torch.Softmax(attention_score, dim=-1) # 개헤단단
+        attention_weights = torch.softmax(attention_score, dim=-1) # 개헤단단
         
         attention = attention_weights @ V
         
