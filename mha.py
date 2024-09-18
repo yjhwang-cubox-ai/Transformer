@@ -12,7 +12,7 @@ class MHA(nn.Module):
         self.fc_v = nn.Linear(d_model, d_model)
         self.fc_o = nn.Linear(d_model, d_model)
         
-        self.scale = torch.sqrt()
+        self.scale = torch.sqrt(torch.tensor(d_model/n_heads))
     
     def forward(self, Q, K, V, mask = None):
         Q = self.fc_q(Q) # 개, 단, 차
@@ -36,3 +36,15 @@ class MHA(nn.Module):
         
         x = self.fc_o(x)
         return x, attention_weights
+
+class FeedForward(nn.Module):
+    def __init__(self, d_model, d_ff, drop_p):
+        super().__init__()
+        self.linear = nn.Sequential(
+            nn.Linear(d_model, d_ff),
+            nn.ReLU(),
+            nn.Dropout(drop_p),
+            nn.Linear(d_ff, d_model)
+        )
+    def forward(self, x):
+        return self.linear(x)
