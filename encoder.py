@@ -52,4 +52,3 @@ class Encoder(nn.Module):
                 atten_encs = torch.cat([atten_encs, atten_enc[0].unsqueeze(0)], dim=0)
         
         return x, atten_encs
-            
