@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "main",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "test",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "test2.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "translation",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "translation.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "hugg",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "hugg.py",
+            "console": "integratedTerminal"
+        }
+    ]
+}

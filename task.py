@@ -6,6 +6,7 @@ class Task:
     def __init__(self, model, tokenizer, train_DL, val_DL, test_DL, criterion, optimizer, scheduler, DEVICE):
         self.model = model
         self.tokenizer = tokenizer
+        self.tokenizer_max_len = 100
         self.train_DL = train_DL
         self.val_DL = val_DL
         self.test_DL = test_DL
@@ -50,14 +51,12 @@ class Task:
         print(f"Test loss: {test_loss:.3f} | Test PPL: {math.exp(test_loss):.3f}")
     
     def loss_epoch(self, DL):
-        max_len = 100
         N = len(DL.dataset)
-
         rloss = 0
         for src_texts, trg_texts in tqdm(DL, leave=False):
-            src = self.tokenizer(src_texts, padding=True, truncation=True, max_length= max_len, return_tensors='pt', add_special_tokens = False).input_ids.to(self.DEVICE)
+            src = self.tokenizer(src_texts, padding=True, truncation=True, max_length= self.tokenizer_max_len, return_tensors='pt', add_special_tokens = False).input_ids.to(self.DEVICE)
             trg_texts = ['</s> ' + s for s in trg_texts]
-            trg = self.tokenizer(trg_texts, padding=True, truncation=True, max_length = max_len, return_tensors='pt').input_ids.to(self.DEVICE)
+            trg = self.tokenizer(trg_texts, padding=True, truncation=True, max_length = self.tokenizer_max_len, return_tensors='pt').input_ids.to(self.DEVICE)
             # inference
             y_hat = self.model(src, trg[:,:-1])[0] # 모델 통과 시킬 땐 trg의 마지막 토큰은 제외!
             # y_hat.shape = 개단차 즉, 훈련 땐 문장이 한번에 튀어나옴

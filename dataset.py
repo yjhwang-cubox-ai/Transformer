@@ -11,3 +11,13 @@ class CustomDataset(Dataset):
 
     def __getitem__(self, idx):
         return self.data.loc[idx, '원문'], self.data.loc[idx, '번역문']
+
+class WMT(Dataset):
+    def __init__(self, data):
+        self.data = data
+
+    def __len__(self):
+        return self.data.shape[0]
+
+    def __getitem__(self, idx):
+        return self.data[idx]['translation']['en'], self.data[idx]['translation']['de']
