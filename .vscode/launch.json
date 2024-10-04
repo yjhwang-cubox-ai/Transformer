@@ -31,6 +31,13 @@
             "request": "launch",
             "program": "hugg.py",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "lightning_training",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "lightning_train.py",
+            "console": "integratedTerminal"
         }
     ]
 }
