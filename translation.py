@@ -2,7 +2,6 @@ import torch
 from transformers import MarianTokenizer
 import pandas as pd
 from dataset import CustomDataset
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 max_len = 100
 tokenizer = MarianTokenizer.from_pretrained('Helsinki-NLP/opus-mt-ko-en')
@@ -13,11 +12,11 @@ model = loaded['model']
 def translation(model, src_text, atten_map_save = False):
     model.eval()
     with torch.no_grad():
-        src = tokenizer.encode(src_text, return_tensors='pt', add_special_tokens=False).to(DEVICE)
+        src = tokenizer.encode(src_text, return_tensors='pt', add_special_tokens=False)
         enc_mask = model.make_enc_mask(src)
         enc_out, atten_encs = model.encoder(src, enc_mask, atten_map_save)
 
-        pred = tokenizer.encode('</s>', return_tensors='pt', add_special_tokens=False).to(DEVICE)
+        pred = tokenizer.encode('</s>', return_tensors='pt', add_special_tokens=False)
         for _ in range(max_len - 1):
             dec_mask = model.make_dec_mask(pred)
             enc_dec_mask = model.make_enc_dec_mask(src, pred)

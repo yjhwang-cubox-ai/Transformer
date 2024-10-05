@@ -1,6 +1,7 @@
 import lightning as L
 from lightning.pytorch.callbacks import LearningRateMonitor, ModelCheckpoint
 from transformer import LitTransformerModule
+# from modelmodule import LitTransformerModuleV2
 
 from datamodule import WMT14DataModule
 
@@ -19,7 +20,7 @@ def main():
     trainer = L.Trainer(
         max_epochs=epochs,
         accelerator='gpu',
-        devices=num_gpus,
+        # devices=num_gpus,
         num_nodes=num_nodes,
         val_check_interval=0.1,
         callbacks=[

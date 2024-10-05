@@ -15,6 +15,15 @@ class MHA(nn.Module):
         self.scale = torch.sqrt(torch.tensor(d_model/n_heads))
     
     def forward(self, Q, K, V, mask = None):
+        # 레이어의 디바이스를 가져옵니다.
+        device = next(self.fc_q.parameters()).device
+
+        # 입력 텐서를 레이어의 디바이스로 이동시킵니다.
+        Q = Q.to(device)
+        K = K.to(device)
+        V = V.to(device)    
+
+
         Q = self.fc_q(Q) # 개, 단, 차
         K = self.fc_k(K)
         V = self.fc_v(V)
