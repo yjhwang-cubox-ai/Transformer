@@ -1,11 +1,22 @@
 import lightning as L
 from lightning.pytorch.callbacks import LearningRateMonitor, ModelCheckpoint
+from lightning.pytorch.loggers import WandbLogger
 from transformer import LitTransformerModule
-# from modelmodule import LitTransformerModuleV2
-
 from datamodule import WMT14DataModule
 
+import wandb
+
+
 def main():
+    project_name = 'transformer_train'
+    run_name = '241006_1st'
+
+    # Logger setting
+    wandb.finish()
+    wandb.login(key="53f960c86b81377b89feb5d30c90ddc6c3810d3a")
+    wandb_logger = WandbLogger(project=project_name, name=run_name, config={}, log_model=False)    
+    print("login!")
+
     # 데이터 모듈 초기화
     data_module = WMT14DataModule()
 
@@ -14,8 +25,8 @@ def main():
     
     # Training
     epochs = 30
-    num_gpus = 1
-    num_nodes = 1
+    num_gpus = 4
+    num_nodes = 4
 
     trainer = L.Trainer(
         max_epochs=epochs,
