@@ -17,7 +17,7 @@ class EncodeLayer(nn.Module):
     def forward(self, x, enc_mask):
         # 레이어의 디바이스를 가져옵니다.
         device = next(self.self_attn.parameters()).device
-        print("encoder device: ", device)
+        # print("encoder device: ", device)
         # 입력 텐서를 레이어의 디바이스로 이동시킵니다.
         x = x.to(device)
         enc_mask = enc_mask.to(device)

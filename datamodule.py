@@ -3,8 +3,6 @@ import lightning as L
 from transformers import MarianTokenizer
 from datasets import load_dataset
 
-from dataset import WMT
-
 class WMT14DataModule(L.LightningDataModule):
     def __init__(self):
         super().__init__()
