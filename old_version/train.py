@@ -34,6 +34,7 @@ def main():
         devices=num_gpus,
         num_nodes=num_nodes,
         val_check_interval=0.1,
+        logger=wandb_logger,
         callbacks=[
             LearningRateMonitor(logging_interval='epoch'),
             ModelCheckpoint(
