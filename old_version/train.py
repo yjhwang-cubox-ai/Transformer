@@ -25,8 +25,8 @@ def main():
     
     # Training
     epochs = 30
-    num_gpus = 4
-    num_nodes = 4
+    num_gpus = 1
+    num_nodes = 1
 
     trainer = L.Trainer(
         max_epochs=epochs,
